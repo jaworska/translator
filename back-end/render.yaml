@@ -3,7 +3,7 @@ services:
     name: translator-backend
     runtime: node
     buildCommand: npm install
-    startCommand: npx json-server --watch db.json --port $PORT --host 0.0.0.0
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
