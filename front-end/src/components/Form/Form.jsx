@@ -29,7 +29,7 @@ export function Form({ onFormSubmit }) {
 
   function handleWordChange(value) {
     setWord(value);
-    
+
     if (debounceTimer.current) {
       clearTimeout(debounceTimer.current);
     }
@@ -42,19 +42,21 @@ export function Form({ onFormSubmit }) {
     debounceTimer.current = setTimeout(async () => {
       try {
         const res = await fetch(
-          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(value)}&langpair=pl|en`
+          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(
+            value
+          )}&langpair=pl|en`
         );
-        
+
         const data = await res.json();
-        
+
         if (data.responseStatus === 200 && data.responseData) {
           setTranslation(data.responseData.translatedText);
         }
       } catch (error) {
         console.error("Translation error:", error);
       }
-    }, 500); 
-  } 
+    }, 500);
+  }
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
