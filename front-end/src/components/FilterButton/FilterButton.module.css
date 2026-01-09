@@ -1,0 +1,21 @@
+.button {
+  background-color: transparent;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--font-color);
+  font-weight: 500;
+}
+
+.button:hover {
+  background-color: var(--secondary-color);
+}
+
+.active {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+}

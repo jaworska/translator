@@ -1,0 +1,121 @@
+.item {
+  border-radius: 12px;
+  margin: 12px 24px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  border: 2px solid transparent;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  flex: 1;
+  padding-right: 100px;
+}
+
+.wordGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--font-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wordText {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.item:hover {
+  background-color: var(--background-color);
+  border-color: var(--secondary-color);
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(172, 140, 255, 0.15);
+}
+
+.item:hover .button,
+.button:focus-visible {
+  opacity: 1;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.button {
+  background-color: var(--color-white);
+  border: 2px solid var(--primary-color);
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  line-height: 1rem;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .item {
+    margin: 8px 12px;
+    padding: 14px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .wordText {
+    font-size: 16px;
+  }
+
+  .buttons {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin-top: 8px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .button {
+    opacity: 1;
+  }
+
+  .item:hover {
+    transform: none;
+  }
+}

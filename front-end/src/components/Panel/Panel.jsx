@@ -1,0 +1,113 @@
+import { useEffect, useState } from "react";
+import styles from "./Panel.module.css";
+import { List } from "../List/List";
+import { Form } from "../Form/Form";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { FilterButton } from "../FilterButton/FilterButton";
+import { Info } from "../Info/Info";
+const url = "http://localhost:3000/words";
+
+export function Panel() {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    const params = selectedCategory ? `?category=${selectedCategory}` : "";
+    fetch(`${url}${params}`)
+      .then((response) => response.json())
+      .then((json) => {
+        setData(json);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setTimeout(() => setError(null), 3000);
+      });
+  }, [selectedCategory]);
+
+  function handleFormSubmit(formData) {
+    if (!formData.word || !formData.translation) {
+      setError("Proszę wypełnić wszystkie pola formularza");
+      setTimeout(() => setError(null), 3000);
+      return;
+    }
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (!selectedCategory || selectedCategory === response.category) {
+          setData((prevData) => [...prevData, response]);
+        }
+      });
+  }
+
+  function handleDeleteItem(id) {
+    fetch(`${url}/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setData((prevData) => prevData.filter((item) => item.id !== id));
+        } else {
+          throw new Error("Nie udało się usunąć elementu");
+        }
+      })
+      .catch((error) => {
+        setError(error.message);
+        setTimeout(() => setError(null), 3000);
+      });
+  }
+
+  function handleFilterClick(category) {
+    setSelectedCategory(category);
+  }
+
+  if (isLoading) {
+    return <p>Loading data...</p>;
+  }
+
+  return (
+    <>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      <section className={styles.section}>
+        <Form onFormSubmit={handleFormSubmit} />
+
+        <div className={styles.filterSection}>
+          <h3 className={styles.filterTitle}>Filtruj słowa:</h3>
+          <div className={styles.filters}>
+            <FilterButton
+              active={selectedCategory === null}
+              onClick={() => handleFilterClick(null)}
+            >
+              ⭐ Wszystkie
+            </FilterButton>
+            <FilterButton
+              active={selectedCategory === "noun"}
+              onClick={() => handleFilterClick("noun")}
+            >
+              📚 Rzeczowniki
+            </FilterButton>
+            <FilterButton
+              active={selectedCategory === "verb"}
+              onClick={() => handleFilterClick("verb")}
+            >
+              ⚡ Czasowniki
+            </FilterButton>
+          </div>
+        </div>
+
+        <div className={styles.listHeader}>
+          <h3 className={styles.listTitle}>📝 Twoje słówka ({data.length})</h3>
+        </div>
+        <List data={data} onDeleteItem={handleDeleteItem}></List>
+      </section>
+    </>
+  );
+}

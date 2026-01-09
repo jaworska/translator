@@ -1,0 +1,22 @@
+.error {
+  position: fixed;
+  top: 24px;
+  background-color: var(--color-error);
+  color: var(--color-white);
+  padding: 16px 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
