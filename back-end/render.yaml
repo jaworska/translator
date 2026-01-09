@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: translator-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: npx json-server --watch db.json --port $PORT --host 0.0.0.0
+    envVars:
+      - key: NODE_ENV
+        value: production
+

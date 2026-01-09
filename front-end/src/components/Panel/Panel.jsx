@@ -5,7 +5,9 @@ import { Form } from "../Form/Form";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import { FilterButton } from "../FilterButton/FilterButton";
 import { Info } from "../Info/Info";
-const url = "http://localhost:3000/words";
+import { config } from "../../config";
+
+const url = config.apiUrl;
 
 export function Panel() {
   const [data, setData] = useState([]);

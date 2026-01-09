@@ -8,10 +8,11 @@
         "cp": "^0.2.0",
         "npm-run-all": "^4.1.5"
     },
-    "scripts": {
-        "reset": "cp \"./back-end/backup/original_db.json\" ./back-end/db.json",
-        "front-end": "npm run dev --workspace=front-end",
-        "back-end": "npm run dev --workspace=back-end",
-        "dev": "npm-run-all --parallel front-end back-end"
-    }
+  "scripts": {
+    "reset": "cp \"./back-end/backup/original_db.json\" ./back-end/db.json",
+    "front-end": "npm run dev --workspace=front-end",
+    "back-end": "npm run dev --workspace=back-end",
+    "dev": "npm-run-all --parallel front-end back-end",
+    "deploy": "npm run deploy --workspace=front-end"
+  }
 }
